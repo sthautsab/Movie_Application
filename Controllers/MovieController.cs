@@ -1,16 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Movie_Application.Models;
 using Movie_Application.Repository.Interface;
 using Movie_Application.ViewModel;
 
 namespace Movie_Application.Controllers
 {
+    [Authorize]
     public class MovieController : Controller
     {
         private readonly IMovieRepository _movieRepository;
-        public MovieController(IMovieRepository movieRepository)
+        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
+        public MovieController(IMovieRepository movieRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
         {
             _movieRepository = movieRepository;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public IActionResult AddMovie()
@@ -19,8 +23,19 @@ namespace Movie_Application.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMovie(MovieViewModel movie)
+        public async Task<IActionResult> AddMovie(MovieViewModel movieVM)
         {
+            string uniqueFileName = null;
+            if (movieVM.Photo != null)
+            {
+                uniqueFileName = await UploadFile(movieVM.Photo);
+            }
+            Movie movie = new Movie();
+            movie.Name = movieVM.Name;
+            movie.Director = movieVM.Director;
+            movie.Description = movieVM.Description;
+            movie.PhotoPath = uniqueFileName;
+            movie.Genre = movieVM.Genre;
 
             bool result = await _movieRepository.AddMovie(movie);
             if (result == true)
@@ -35,6 +50,7 @@ namespace Movie_Application.Controllers
             }
 
         }
+
 
         [HttpGet]
         public IActionResult GetMovies()
@@ -75,16 +91,45 @@ namespace Movie_Application.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(UpdateViewModel updatedMovie)
         {
+            try
+            {
+                string uniqueFileName = null;
+                //string filePath = updatedMovie.PhotoPath;
+                if (updatedMovie.Photo != null)
+                {
+                    uniqueFileName = await UploadFile(updatedMovie.Photo);
+                }
+                Movie movie = new Movie();
+                movie.Id = updatedMovie.Id;
+                movie.Name = updatedMovie.Name;
+                movie.Director = updatedMovie.Director;
+                movie.Description = updatedMovie.Description;
+                movie.Genre = updatedMovie.Genre;
 
-            bool result = await _movieRepository.UpdateMovie(updatedMovie);
-            if (result == true)
-            {
-                TempData["SuccessMessage"] = "Movie updated successfully!";
-                return RedirectToAction("GetMovies");
+                if (uniqueFileName != null)
+                {
+                    movie.PhotoPath = uniqueFileName;
+                }
+                else
+                {
+                    movie.PhotoPath = updatedMovie.PhotoPath;
+                }
+
+                bool result = await _movieRepository.UpdateMovie(movie);
+                if (result == true)
+                {
+                    TempData["SuccessMessage"] = "Movie updated successfully!";
+                    return RedirectToAction("GetMovies");
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "An error occurred while updating the movie: ";
+                    return View();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "An error occurred while updating the movie: ";
+                TempData["ErrorMessage"] = "An error occurred while updating the movie: " + ex.Message;
                 return View();
             }
         }
@@ -105,7 +150,18 @@ namespace Movie_Application.Controllers
             }
         }
 
+        public async Task<string> UploadFile(IFormFile file)
+        {
+            string uniqueFileName = null;
+            string uploadFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
 
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+
+            string filePath = Path.Combine(uploadFolder, uniqueFileName);
+
+            await file.CopyToAsync(new FileStream(filePath, FileMode.Create));
+            return uniqueFileName;
+        }
 
     }
 }

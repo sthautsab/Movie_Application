@@ -1,5 +1,4 @@
 ﻿using Movie_Application.Models;
-using Movie_Application.ViewModel;
 
 namespace Movie_Application.Repository.Interface
 {
@@ -7,11 +6,8 @@ namespace Movie_Application.Repository.Interface
     {
         List<Movie> GetMovies();
         Movie GetMovieById(Guid id);
-        Task<bool> AddMovie(MovieViewModel model);
-        Task<bool> UpdateMovie(UpdateViewModel updatedMovie);
-
-
-
+        Task<bool> AddMovie(Movie model);
+        Task<bool> UpdateMovie(Movie updatedMovie);
         bool DeleteMovie(Guid id);
 
     }
