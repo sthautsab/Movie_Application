@@ -6,7 +6,7 @@ using Movie_Application.ViewModel;
 
 namespace Movie_Application.Controllers
 {
-    [Authorize]
+
     public class MovieController : Controller
     {
         private readonly IMovieRepository _movieRepository;
@@ -21,7 +21,7 @@ namespace Movie_Application.Controllers
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddMovie(MovieViewModel movieVM)
         {
@@ -62,11 +62,15 @@ namespace Movie_Application.Controllers
 
         public IActionResult GetMovieById(Guid id)
         {
+            MovieCommentVM details = new MovieCommentVM();
             Movie movie = new Movie();
             movie = _movieRepository.GetMovieById(id);
+
+            details.Movie = movie;
+
             if (movie != null)
             {
-                return View(movie);
+                return View(details);
             }
             else
             {

@@ -1,4 +1,8 @@
-﻿@model Movie_Application.Models.Movie
+﻿@using Movie_Application.ViewModel;
+@using Microsoft.AspNetCore.Identity
+@model Movie_Application.ViewModel.MovieCommentVM
+@inject Movie_Application.Repository.Interface.ICommentRepository CommentRepository
+
 
 @{
     ViewData["Title"] = "GetMovieById";
@@ -7,54 +11,105 @@
     .detail-image{
         width:200px;
     }
+
+    .movie{
+        display:flex;
+        width:100%;
+        margin-top:3rem;
+        /*background-color:gray;*/
+    }
+
+    .movie-poster{
+        border-radius:9px;
+    }
+    .movie-information{
+        display:flex;
+        flex-direction:column;
+        margin-left:80px;   
+        max-width:40%;       
+        margin-bottom:2rem;
+       
+
+    }
+
+    .movie-description{
+        max-width:500px;
+       word-wrap:  break-word;
+    }
+
+    .movie-description p{
+        font-size:0.8rem;
+    }
 </style>
 
-<h1>GetMovieById</h1>
 
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="row">
+<div>  
+    <div class="movie">
+        <div class="movie-poster">
+            <img class="detail-image" src="~/images/@Model.Movie.PhotoPath" alt="Image">
+        </div>
+
+        <div class="movie-information">
+           <div class="movie-name"><h1>@Model.Movie.Name</h1></div>
         
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Director)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Director)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhotoPath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhotoPath)
-        </dd>
-    </dl>
 
-    <div class="row">
-        <div class="col-4">
-            <img class="detail-image" src="~/images/@Model.PhotoPath" alt="Image">
+        <div class="movie-description">
+            <h6>Description</h6>
+            @*<p>@Model.Description</p>*@
+                <p>kdshfklahsdkjlfhlllhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhlhh</p>
+
+        </div>
+
+        <div class="movie-info">
+            <div class="movie-genre">
+                <h6 style="display:inline;">Genre :</h6>
+                <span>@Model.Movie.Genre</span>             
+            </div>
+            <div class="movie-director">
+                <h6 style="display:inline;">Director :</h6>
+                <span>@Model.Movie.Director</span>
+            </div>
+
+        </div>
         </div>
     </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Movie?.Id">Edit</a> |
     <a asp-action="GetMovies">Back to List</a>
 </div>
+
+@*R A T I N G*@
+
+<div class="rating">
+    <partial name="../Rating/_AddRating" model = "@Model.Movie.Id"/>
+</div>
+
+@*C O M M E N T*@
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="comment-section">
+        @await Html.PartialAsync("../Comment/_AddComment", Model)
+    </div>
+}
+
+@*C O M M E N T S*@
+<div class="comments" id="commentContainer">
+   @await Html.PartialAsync("../Comment/_GetMovieComments", await CommentRepository.GetMovieComments(Model.Movie.Id))
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+   
+
+
+
+
+
+

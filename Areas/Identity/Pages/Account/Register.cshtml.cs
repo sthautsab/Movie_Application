@@ -121,6 +121,9 @@ namespace Movie_Application.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    //added so that the new registered user gets User role assigned
+                    await _userManager.AddToRoleAsync(user, "User");
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

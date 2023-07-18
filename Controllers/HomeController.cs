@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Movie_Application.Models;
 using System.Diagnostics;
 
@@ -15,9 +16,26 @@ namespace Movie_Application.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var data = new
+            {
+                name = "utsab",
+                age = "23"
+
+            };
+            return View(data);
         }
 
+        public IActionResult Fetch(string name, string age)
+        {
+            var data = new
+            {
+                name = name,
+                age = age
+
+            };
+            return Json(data);
+        }
+        [Authorize(Roles = "User")]
         public IActionResult Privacy()
         {
             return View();

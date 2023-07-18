@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Movie_Application.Models.Comment>
+@using Microsoft.AspNetCore.Identity
+
+    <style>
+        .custom-line-spacing{
+            line-height:0.1;
+        }
+        .btn-edit{
+            margin: 0 5px;
+            border-radius:5px;
+        }
+        .comment-card{
+            border-radius:8px;
+        }
+    </style>
+
+<h3>Comments</h3>
+@foreach (var item in Model)
+{
+    <div class="card mb-3 comment-card">
+        <div class="card-body">                      
+            <p class="card-text">@Html.DisplayFor(modelItem => item.Content)</p>
+            <p class="card-text custom-line-spacing"><small class="text-muted">Posted By: @Html.DisplayFor(modelItem => item.UserName)</small></p>
+            <p class="card-text custom-line-spacing"><small class="text-muted">@Html.DisplayFor(modelItem => item.DatePosted)</small></p>
+            <div class="btn-group">
+                @if(User.Identity.IsAuthenticated && User.Identity.Name == item.UserName)
+                {
+                <a class="btn btn-primary btn-sm btn-edit" asp-controller="Comment" asp-action="Edit" asp-route-CommentId="@item.CommentId">Edit</a>
+               
+                <a class="btn btn-danger btn-sm" asp-controller="Comment" asp-action="Delete" asp-route-CommentId="@item.CommentId" asp-route-MovieId="@item.MovieId">Delete</a>
+                 }
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

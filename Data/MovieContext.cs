@@ -12,5 +12,9 @@ namespace Movie_Application.Data
         }
         public DbSet<Movie> Movies { get; set; }
         //public DbSet<User> User { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
     }
 }

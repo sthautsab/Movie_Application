@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Movie_Application.Data;
 using Movie_Application.Repository.Implementation;
 using Movie_Application.Repository.Interface;
+using Movie_Application.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,16 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MovieContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("MovieConnect")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>().AddEntityFrameworkStores<MovieContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddDefaultTokenProviders()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<MovieContext>();
 
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+
+builder.Services.AddScoped<IRole, Role>();
 
 var app = builder.Build();
 
@@ -34,8 +42,16 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+using (var scope = app.Services.CreateScope())
+{
+    var role = scope.ServiceProvider.GetRequiredService<IRole>();
+    await role.Initialize();
+}
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();

@@ -4,26 +4,6 @@
     ViewData["Title"] = "GetMovies";
 }
 
-@*<style>
-    .message-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        transition:all 2s ease-in-out;
-    }
-</style>
-
-<div id="message-container">
-    @if (TempData.ContainsKey("SuccessMessage"))
-    {
-        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-    }
-    @if (TempData.ContainsKey("ErrorMessage"))
-    {
-        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-    }
-</div>*@
 
 <style>
     .table-photo{
@@ -86,13 +66,3 @@
     </tbody>
 </table>
 
-@*<script>
-    document.addEventListener("DOMContentLoaded", function(){
-        var messageContainer = document.getElementById("message-container");
-
-        setTimeout(function(){
-            messageContainer.style.display = "none";
-
-        }, 4000);
-    })
-</script>*@

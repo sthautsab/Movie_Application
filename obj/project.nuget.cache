@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "hu1XXfCKDnRtswD4QWRgHcCMbHMsqE2bM10/473lxDEI3LYFf96em0xEvTaluBIrANo32MFEETnCxYS6/JcTVw==",
+  "dgSpecHash": "aJlLoZO5EFuuZwLwRp2GWuAyNUAhgUjvkiDzY9uAAE3H66Pb6O8LTkC/Z8Cwv+Kzzx1pGPFX/h+OMjsizWRROQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\Movie Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shres\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\shres\\.nuget\\packages\\documentformat.openxml\\2.20.0\\documentformat.openxml.2.20.0.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",
@@ -195,6 +196,7 @@
     "C:\\Users\\shres\\.nuget\\packages\\system.io.compression.zipfile\\4.3.0\\system.io.compression.zipfile.4.3.0.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\system.io.filesystem\\4.3.0\\system.io.filesystem.4.3.0.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\system.io.filesystem.primitives\\4.3.0\\system.io.filesystem.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\shres\\.nuget\\packages\\system.io.packaging\\4.7.0\\system.io.packaging.4.7.0.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512",
     "C:\\Users\\shres\\.nuget\\packages\\system.linq.expressions\\4.3.0\\system.linq.expressions.4.3.0.nupkg.sha512",

@@ -18,5 +18,7 @@ namespace Movie_Application.Models
 
         public string? PhotoPath { get; set; }
 
+        public ICollection<Comment> Comments { get; set; }
+
     }
 }

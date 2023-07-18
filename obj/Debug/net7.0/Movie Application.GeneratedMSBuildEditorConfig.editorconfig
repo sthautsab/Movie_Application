@@ -176,6 +176,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/shres/Desktop/Movie Proj/Movie Application/Views/Comment/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWVudFxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shres/Desktop/Movie Proj/Movie Application/Views/Comment/_AddComment.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWVudFxfQWRkQ29tbWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shres/Desktop/Movie Proj/Movie Application/Views/Comment/_GetMovieComments.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWVudFxfR2V0TW92aWVDb21tZW50cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/shres/Desktop/Movie Proj/Movie Application/Views/Home/error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxlcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -206,6 +218,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/shres/Desktop/Movie Proj/Movie Application/Views/Movie/GetMovies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcR2V0TW92aWVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shres/Desktop/Movie Proj/Movie Application/Views/Rating/_AddRating.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmF0aW5nXF9BZGRSYXRpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/shres/Desktop/Movie Proj/Movie Application/Views/Shared/Error.cshtml]
