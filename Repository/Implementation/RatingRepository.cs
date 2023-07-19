@@ -49,11 +49,11 @@ namespace Movie_Application.Repository.Implementation
             await _context.SaveChangesAsync();
         }
 
-        public async Task<double?> GetAverageRating(Guid MovieId)
+        public async Task<double> GetAverageRating(Guid MovieId)
         {
-            double? averageRating = await _context.Ratings
+            double averageRating = (await _context.Ratings
                 .Where(r => r.MovieId == MovieId)
-                .AverageAsync(r => r.Rate);
+                .AverageAsync(r => r.Rate)).Value;
 
             return averageRating;
 

@@ -50,6 +50,7 @@
 </form>
 
 
+
 <script>
     $(document).ready(function () {
         const starLabel = document.querySelectorAll('.star-rating label');
@@ -81,8 +82,12 @@
                 type: "POST",
                 data: data,
                 success: function (response) {
+                    console.log(response)
                     // Handle the success response
-                    alert("success");
+                    var $responseHtml = $(response);
+                    var $updatedContent = $responseHtml.find('#average-rating');
+
+                    $('#average-rating').html($updatedContent);
                 },
                 error: function (xhr, status, error) {
                     // Handle the error response

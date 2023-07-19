@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Movie_Application.Models
 {
@@ -17,6 +18,9 @@ namespace Movie_Application.Models
         public string? Description { get; set; }
 
         public string? PhotoPath { get; set; }
+
+        [DefaultValue(0)]
+        public double AverageRating { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
 

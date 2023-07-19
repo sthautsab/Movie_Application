@@ -9,13 +9,17 @@ namespace Movie_Application.Controllers
     public class RatingController : Controller
     {
         private readonly IRatingRepository _ratingRepository;
-        public RatingController(IRatingRepository ratingRepository)
+        private readonly IMovieRepository _movieRepository;
+
+        public RatingController(IRatingRepository ratingRepository, IMovieRepository movieRepository)
         {
             _ratingRepository = ratingRepository;
+            _movieRepository = movieRepository;
         }
         [HttpPost]
         public async Task<IActionResult> AddRating([Bind("MovieId, Rate")] RatingVM ratingVM)
         {
+            Movie movie = new Movie();
             Rating rating = new Rating();
             rating.MovieId = ratingVM.MovieId;
             rating.Rate = ratingVM.Rate;
@@ -32,6 +36,16 @@ namespace Movie_Application.Controllers
             {
                 await _ratingRepository.UpdateUserRating(rating);
             }
+
+            double averageRating = await _ratingRepository.GetAverageRating(ratingVM.MovieId);
+
+            movie = await _movieRepository.GetMovieById(rating.MovieId);
+            if (movie != null)
+            {
+                movie.AverageRating = averageRating;
+                await _movieRepository.UpdateMovie(movie);
+            }
+
 
             return RedirectToAction("GetMovieById", "Movie", new { id = ratingVM.MovieId });
             //return PartialView("~/Views/Rating/_AddRating.cshtml", ratingVM);
