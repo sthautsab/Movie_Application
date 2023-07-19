@@ -16,7 +16,7 @@ namespace Movie_Application.Models
         [ForeignKey("Movie")]
         public Guid MovieId { get; set; }
         [Range(0, 5)]
-        public int Rate { get; set; }
+        public int? Rate { get; set; }
 
         public virtual IdentityUser User { get; set; }
         public virtual Movie Movie { get; set; }

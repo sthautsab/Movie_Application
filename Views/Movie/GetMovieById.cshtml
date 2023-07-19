@@ -80,10 +80,11 @@
 </div>
 
 @*R A T I N G*@
-
+@if (User.Identity.IsAuthenticated){
 <div class="rating">
-    <partial name="../Rating/_AddRating" model = "@Model.Movie.Id"/>
+    <partial name="../Rating/_AddRating" model = "@Model.RatingVM"/>
 </div>
+}
 
 @*C O M M E N T*@
 @if (User.Identity.IsAuthenticated)

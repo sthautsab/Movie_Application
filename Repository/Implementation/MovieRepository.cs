@@ -23,7 +23,7 @@ namespace Movie_Application.Repository.Implementation
             return success;
         }
 
-        public Movie GetMovieById(Guid id)
+        public async Task<Movie> GetMovieById(Guid id)
         {
             //Movie? movie = new Movie();
             var movie = _movieContext.Movies.FirstOrDefault(m => m.Id == id);

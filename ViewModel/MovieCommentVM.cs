@@ -6,6 +6,7 @@ namespace Movie_Application.ViewModel
     {
         public Movie Movie { get; set; }
         public CommentVM? CommentVM { get; set; }
+        public RatingVM? RatingVM { get; set; }
 
     }
 }

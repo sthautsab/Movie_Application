@@ -1,4 +1,4 @@
-﻿@model Guid
+﻿@model Movie_Application.ViewModel.RatingVM
 <style>
    .star-rating {
   border: solid 1px #ccc;
@@ -28,10 +28,11 @@
   color: #fc0;
 }
 </style>
-<form id="ratingForm" method="post" >
+
+<form  method="post" >
 <div class="star-rating">
     
-    <input type="hidden" name="MovieId" value="@Model"/>
+    <input type="hidden" name="MovieId" value="@Model.MovieId"/>
     <input type="radio" id="5-stars" name="Rate" value="5" />
     <label for="5-stars" class="star">&#9733;</label>
         <input type="radio" id="4-stars" name="Rate" value="4" />
@@ -44,13 +45,28 @@
     <label for="1-star" class="star">&#9733;</label>
    
 </div>
-    <button id = "submitButton" class="btn btn-primary" type="submit">Submit</button>
+    <button id = "submitButton" class="btn btn-primary" type="submit" disabled>Rate Movie</button>
 
 </form>
 
 
 <script>
     $(document).ready(function () {
+        const starLabel = document.querySelectorAll('.star-rating label');
+        const submitButton = document.getElementById('submitButton');
+        const ratingValue = @Model.Rate;
+
+        starLabel.forEach((label) => {
+            label.addEventListener('click', () =>{
+                submitButton.disabled = false;
+            });
+        });
+        if(ratingValue != 0){
+        const radioInput = document.getElementById(`${ratingValue}-stars`);
+            if (radioInput) {
+                radioInput.checked = true;
+            }
+        }
         $("#submitButton").on("click", function (event) {
             event.preventDefault();
             var movieId = $("input[name='MovieId']").val();
@@ -60,9 +76,6 @@
                 MovieId: movieId,
                 Rate: rating
             };
-            alert(movieId);
-            alert(rating);
-
             $.ajax({
                 url: "/Rating/AddRating",
                 type: "POST",

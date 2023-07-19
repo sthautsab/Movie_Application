@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Movie_Application.Models;
 using Movie_Application.Repository.Interface;
 using Movie_Application.ViewModel;
+using System.Security.Claims;
 
 namespace Movie_Application.Controllers
 {
@@ -11,10 +12,13 @@ namespace Movie_Application.Controllers
     {
         private readonly IMovieRepository _movieRepository;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
-        public MovieController(IMovieRepository movieRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
+        private readonly IRatingRepository _ratingRepository;
+
+        public MovieController(IMovieRepository movieRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IRatingRepository ratingRepository)
         {
             _movieRepository = movieRepository;
             _hostingEnvironment = hostingEnvironment;
+            _ratingRepository = ratingRepository;
         }
 
         public IActionResult AddMovie()
@@ -60,27 +64,46 @@ namespace Movie_Application.Controllers
             return View(movies);
         }
 
-        public IActionResult GetMovieById(Guid id)
+        public async Task<IActionResult> GetMovieById(Guid id)
         {
             MovieCommentVM details = new MovieCommentVM();
+            RatingVM ratingVM = new RatingVM();
             Movie movie = new Movie();
-            movie = _movieRepository.GetMovieById(id);
+            movie = await _movieRepository.GetMovieById(id);
 
-            details.Movie = movie;
 
+
+            var UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(UserId))
+            {
+                var rate = (int)await _ratingRepository.GetRatingByUserIdAndMovieId(UserId, id);
+                if (rate != 0)
+                {
+                    ratingVM.Rate = rate;
+                }
+                else
+                {
+                    ratingVM.Rate = 0;
+                }
+                ratingVM.MovieId = id;
+                ratingVM.UserId = UserId;
+            }
             if (movie != null)
             {
+                details.Movie = movie;
+                details.RatingVM = ratingVM;
                 return View(details);
             }
             else
             {
                 return RedirectToAction("GetMovies");
             }
+
         }
 
-        public IActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var movie = _movieRepository.GetMovieById(id);
+            var movie = await _movieRepository.GetMovieById(id);
             UpdateViewModel updateMovie = new UpdateViewModel();
             updateMovie.Id = movie.Id;
             updateMovie.Name = movie.Name;
