@@ -25,7 +25,6 @@ namespace Movie_Application.Repository.Implementation
 
         public async Task<Movie> GetMovieById(Guid id)
         {
-            //Movie? movie = new Movie();
             var movie = _movieContext.Movies.FirstOrDefault(m => m.Id == id);
             if (movie != null)
             {

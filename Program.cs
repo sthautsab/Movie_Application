@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Movie_Application.Data;
 using Movie_Application.Repository.Implementation;
 using Movie_Application.Repository.Interface;
+using Movie_Application.Repository.SP_Implementation;
 using Movie_Application.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MovieContext>();
 
-builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IMovieRepository, SP_Movierepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 

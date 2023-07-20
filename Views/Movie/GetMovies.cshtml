@@ -4,7 +4,6 @@
     ViewData["Title"] = "GetMovies";
 }
 
-
 <style>
     .table-photo{
         height:100px;
@@ -84,8 +83,8 @@
             </td>
             <td>
                 <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                    <a class="btn btn-secondary" asp-action="GetMovieById" asp-route-id="@item.Id">Details</a> 
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-secondary" asp-action="GetMovieById" asp-route-id="@item.Id">Details</a> 
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
@@ -96,8 +95,7 @@
     @if(Model.PageNumber > 1)
     {
         var pag = Model.PageNumber - 1;
-        @*<a onclick ="navigatePage(page)" href="@Url.Action("GetMovies", new { page = Model.PageNumber - 1 })">Previous</a>*@
-        @*<p onclick ="navigatePage(@page)">Previous</p>*@
+       
         <button class="pagination-btn" data-page="@pag">Previous</button>
     }
 
@@ -110,18 +108,15 @@
         else
         {
             var pag = i;
-            @*<a onclick="navigatePage(page)" href="@Url.Action("GetMovies", new { page = i })">@i</a>*@
             <button class="pagination-btn" data-page="@pag">@i</button>
         }
     }
     @if (Model.PageNumber < Model.TotalPages)
     {
         var pag = Model.PageNumber + 1;
-        @*<a onclick="navigatePage(page)" href="@Url.Action("GetMovies", new { page = Model.PageNumber + 1 })">Next</a>*@
         <button class="pagination-btn" data-page="@pag">Next</button>
     }
 </div>
-
 
 <script>
     

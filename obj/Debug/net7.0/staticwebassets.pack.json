@@ -53,8 +53,16 @@
       "PackagePath": "staticwebassets\\images\\3cc6558a-6a4d-4b6f-9660-eea122124a7a_batman.png"
     },
     {
+      "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\51ee0461-15d7-4aeb-9366-379281b1af2a_batman.png",
+      "PackagePath": "staticwebassets\\images\\51ee0461-15d7-4aeb-9366-379281b1af2a_batman.png"
+    },
+    {
       "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\52cce90d-a3d8-42b7-af2b-d979dda62e9d_2.jpg",
       "PackagePath": "staticwebassets\\images\\52cce90d-a3d8-42b7-af2b-d979dda62e9d_2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\617b6315-ddd0-4229-a41f-3e1e5133c5a1_batman.png",
+      "PackagePath": "staticwebassets\\images\\617b6315-ddd0-4229-a41f-3e1e5133c5a1_batman.png"
     },
     {
       "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\69f349a4-23ae-4e2c-b9fb-00ce4431c457_3.jpg",
@@ -83,6 +91,14 @@
     {
       "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\adc518d3-7acb-4195-8921-c125362799d3_3.jpg",
       "PackagePath": "staticwebassets\\images\\adc518d3-7acb-4195-8921-c125362799d3_3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\b4242869-40dc-4560-9a6e-666f85a80330_movie2.jpg",
+      "PackagePath": "staticwebassets\\images\\b4242869-40dc-4560-9a6e-666f85a80330_movie2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\c22179f8-4ad9-4a13-94c3-d3b91464b95b_batman.png",
+      "PackagePath": "staticwebassets\\images\\c22179f8-4ad9-4a13-94c3-d3b91464b95b_batman.png"
     },
     {
       "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\cd1243b4-a8d6-430b-814e-bf75c5f8bd1f_355832938_984793699217195_4567857545877642791_n.jpg",

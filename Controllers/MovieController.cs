@@ -62,8 +62,6 @@ namespace Movie_Application.Controllers
             int pageNumber = page ?? 1;
             int pageSize = 3;
 
-
-
             List<Movie> movies = new List<Movie>();
             movies = _movieRepository.GetMovies();
 
@@ -84,7 +82,6 @@ namespace Movie_Application.Controllers
                 TotalMovies = totalMovies,
                 TotalPages = totalPages
             };
-
             return View(pagedMovieVM);
         }
 
@@ -94,8 +91,6 @@ namespace Movie_Application.Controllers
             RatingVM ratingVM = new RatingVM();
             Movie movie = new Movie();
             movie = await _movieRepository.GetMovieById(id);
-
-
 
             var UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!string.IsNullOrEmpty(UserId))
