@@ -153,9 +153,9 @@ namespace Movie_Application.Repository.SP_Implementation
 
         public bool DeleteMovie(Guid id)
         {
-            using (SqlConnection con = new SqlConnection())
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand();
+                SqlCommand cmd = new SqlCommand("[dbo].[sp_DeleteMovie]", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("Id", id);
 
