@@ -97,6 +97,10 @@
       "PackagePath": "staticwebassets\\images\\ed42d422-dde4-4fd9-8eb4-d2b9e12580a1_3.jpg"
     },
     {
+      "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\f3e31b1f-45fc-4db8-8362-f00fb8b52bb0_movie2.jpg",
+      "PackagePath": "staticwebassets\\images\\f3e31b1f-45fc-4db8-8362-f00fb8b52bb0_movie2.jpg"
+    },
+    {
       "Id": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\jquery\\jquery.js",
       "PackagePath": "staticwebassets\\jquery\\jquery.js"
     },

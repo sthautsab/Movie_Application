@@ -57,11 +57,35 @@ namespace Movie_Application.Controllers
 
 
         [HttpGet]
-        public IActionResult GetMovies()
+        public IActionResult GetMovies(int? page)
         {
+            int pageNumber = page ?? 1;
+            int pageSize = 3;
+
+
+
             List<Movie> movies = new List<Movie>();
             movies = _movieRepository.GetMovies();
-            return View(movies);
+
+            int totalMovies = movies.Count;
+            int totalPages = (int)Math.Ceiling(totalMovies / (double)pageSize);
+
+            //starting index of each page
+            int startIndex = (pageNumber - 1) * pageSize;
+
+            //skip skips first specified number of data and take takes the specified number of data
+            List<Movie> pagedMovies = movies.Skip(startIndex).Take(pageSize).ToList();
+
+            PagedMovieVM pagedMovieVM = new PagedMovieVM
+            {
+                Movies = pagedMovies,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalMovies = totalMovies,
+                TotalPages = totalPages
+            };
+
+            return View(pagedMovieVM);
         }
 
         public async Task<IActionResult> GetMovieById(Guid id)

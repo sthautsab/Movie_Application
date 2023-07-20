@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bQZJE0n7++ePyt3KKBcSEG1DqOWFVpNHzLdyBTVVnzs=",
+  "Hash": "RqW15F/5dxkpoO3S9ykm6DhqMdAplwUevN8YWruT33A=",
   "Source": "Movie Application",
   "BasePath": "_content/Movie Application",
   "Mode": "Default",
@@ -1460,6 +1460,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\ed42d422-dde4-4fd9-8eb4-d2b9e12580a1_3.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\images\\f3e31b1f-45fc-4db8-8362-f00fb8b52bb0_movie2.jpg",
+      "SourceId": "Movie Application",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\",
+      "BasePath": "_content/Movie Application",
+      "RelativePath": "images/f3e31b1f-45fc-4db8-8362-f00fb8b52bb0_movie2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\f3e31b1f-45fc-4db8-8362-f00fb8b52bb0_movie2.jpg"
     },
     {
       "Identity": "C:\\Users\\shres\\Desktop\\Movie Proj\\Movie Application\\wwwroot\\jquery\\jquery.js",

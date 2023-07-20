@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Movie_Application.Models.Movie>
+﻿@model Movie_Application.ViewModel.PagedMovieVM
 
 @{
     ViewData["Title"] = "GetMovies";
@@ -9,6 +9,32 @@
     .table-photo{
         height:100px;
     }
+
+    .pagination{
+        
+        height:30px;
+        display:flex;
+        align-items:center;
+        justify-content:center;       
+    }
+
+    .pagination button{
+        margin:0 4px;
+        padding: 7px 10px;
+        border: 1px solid #ccc;
+        text-decoration: none;
+        color: #333;
+        border-radius:5px;
+    }
+
+    .pagination .current-page {
+        font-weight: bold;
+        background-color: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
 </style>
 
 <h1>GetMovies</h1>
@@ -20,25 +46,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Movie.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genre)
+                @Html.DisplayNameFor(model => model.Movie.Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Director)
+                @Html.DisplayNameFor(model => model.Movie.Director)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Movie.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhotoPath)
+                @Html.DisplayNameFor(model => model.Movie.PhotoPath)
             </th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
+    <tbody id="table-body">
+@foreach (var item in Model.Movies) {
             <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -65,4 +91,67 @@
 }
     </tbody>
 </table>
+
+<div class="pagination" id = "paginationNav">
+    @if(Model.PageNumber > 1)
+    {
+        var pag = Model.PageNumber - 1;
+        @*<a onclick ="navigatePage(page)" href="@Url.Action("GetMovies", new { page = Model.PageNumber - 1 })">Previous</a>*@
+        @*<p onclick ="navigatePage(@page)">Previous</p>*@
+        <button class="pagination-btn" data-page="@pag">Previous</button>
+    }
+
+    @for (int i = 1; i<=Model.TotalPages; i++)
+    {
+        if (i == Model.PageNumber)
+        {
+            <span class="current-page">@i</span>
+        }
+        else
+        {
+            var pag = i;
+            @*<a onclick="navigatePage(page)" href="@Url.Action("GetMovies", new { page = i })">@i</a>*@
+            <button class="pagination-btn" data-page="@pag">@i</button>
+        }
+    }
+    @if (Model.PageNumber < Model.TotalPages)
+    {
+        var pag = Model.PageNumber + 1;
+        @*<a onclick="navigatePage(page)" href="@Url.Action("GetMovies", new { page = Model.PageNumber + 1 })">Next</a>*@
+        <button class="pagination-btn" data-page="@pag">Next</button>
+    }
+</div>
+
+
+<script>
+    
+       $(document).ready(function () {
+        function navigatePage(page) {
+            $.ajax({
+                url: '/Movie/GetMovies',
+                method: 'GET',
+                data: { page: page },
+                success: function (response) {
+                   var tableRows = $(response).find('#table-body').html();
+                   var paginationNav = $(response).find('#paginationNav').html();
+                    // Update the content of the table with the new data
+                    $('#table-body').html(tableRows);
+                    $('#paginationNav').html(paginationNav);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        // Event delegation for handling click event on pagination buttons
+        $(document).on("click", ".pagination-btn", function () {
+            var page = parseInt($(this).data("page"));
+            if (!isNaN(page)) {
+                navigatePage(page);
+            }
+        });
+    });
+   
+</script>
 
