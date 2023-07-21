@@ -7,6 +7,7 @@ namespace Movie_Application.Models
     public class Rating
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]

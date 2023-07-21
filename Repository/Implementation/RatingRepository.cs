@@ -59,6 +59,9 @@ namespace Movie_Application.Repository.Implementation
 
         }
 
-
+        public Task<Rating> GetRatingDataByUserIdAndMovieId(string UserId, Guid MovieId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

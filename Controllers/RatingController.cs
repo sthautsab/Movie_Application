@@ -36,7 +36,6 @@ namespace Movie_Application.Controllers
             {
                 await _ratingRepository.UpdateUserRating(rating);
             }
-
             double averageRating = await _ratingRepository.GetAverageRating(ratingVM.MovieId);
 
             movie = await _movieRepository.GetMovieById(rating.MovieId);
@@ -46,9 +45,7 @@ namespace Movie_Application.Controllers
                 await _movieRepository.UpdateMovie(movie);
             }
 
-
             return RedirectToAction("GetMovieById", "Movie", new { id = ratingVM.MovieId });
-            //return PartialView("~/Views/Rating/_AddRating.cshtml", ratingVM);
         }
     }
 }
