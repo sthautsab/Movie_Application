@@ -2,7 +2,7 @@
 
 namespace Movie_Application.ViewModel
 {
-    public class MovieViewModel
+    public class MovieVM
     {
         public string? Name { get; set; }
 

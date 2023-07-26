@@ -26,6 +26,23 @@ namespace Movie_Application.Repository.Implementation
             return existingComment;
         }
 
+        //public async Task<List<CommentVM>> GetMovieComments(Guid movieId)
+        //{
+        //    List<CommentVM> comments = new List<CommentVM>();
+        //    comments = await _context.Comments
+        //        .Where(c => c.MovieId == movieId)
+        //        .Select(s => new CommentVM()
+        //        {
+        //            MovieId = s.MovieId,
+        //            CommentId = s.CommentId,
+        //            Content = s.Content,
+        //            DatePosted = s.DatePosted
+        //        })
+        //        .ToListAsync();
+        //    comments = comments.OrderByDescending(c => c.DatePosted).ToList();
+        //    return comments;
+        //}
+
         public async Task<List<Comment>> GetMovieComments(Guid movieId)
         {
             List<Comment> comments = new List<Comment>();

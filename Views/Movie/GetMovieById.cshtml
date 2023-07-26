@@ -1,6 +1,6 @@
 ﻿@using Movie_Application.ViewModel;
 @using Microsoft.AspNetCore.Identity
-@model Movie_Application.ViewModel.MovieCommentVM
+@model Movie_Application.ViewModel.MovieDetailsVM
 @inject Movie_Application.Repository.Interface.ICommentRepository CommentRepository
 
 
@@ -40,6 +40,12 @@
     .movie-description p{
         font-size:0.8rem;
     }
+
+    #average-rating{
+        displat:inline-block;
+        max-width: 4ch; /* Set the maximum width to accommodate three characters */
+        overflow: hidden;
+    }
 </style>
 
 
@@ -73,8 +79,8 @@
         </div>
         <div class="averageRatingContainer">
             <h6 style="display:inline;">Averate Rating :</h6>
-            <span id="average-rating">@Model.Movie.AverageRating</span>
-              @*<p id="average-rating">@Model.Movie.AverageRating</p>*@
+            <span id="average-rating">@Model.Movie.AverageRating.ToString("0.000").Substring(0, 4)</span>
+              
         </div>
         
         </div>
@@ -102,8 +108,40 @@
 
 @*C O M M E N T S*@
 <div class="comments" id="commentContainer">
-   @await Html.PartialAsync("../Comment/_GetMovieComments", await CommentRepository.GetMovieComments(Model.Movie.Id))
+   @*@await Html.PartialAsync("../Comment/_GetMovieComments", await CommentRepository.GetMovieComments(Model.Movie.Id))*@
+
+   <partial name="../Comment/_GetMovieComments" model="@Model.comments"/>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#submitComment").on("click", function (event) {
+            event.preventDefault();
+            var movieId = $("#movieid").val();
+            var content = $("#content").val();
+
+            data = {
+                MovieId: movieId,
+                Content: content
+            };
+            $.ajax({
+                url: "/Comment/AddComment",
+                method: "POST",
+                data: data,
+                success: function (response) {
+                    var $responseHtml = $(response);
+                    var $updatedContent = $responseHtml.find('#commentContainer');
+                    console.log(response);
+                    $('#commentContainer').html($updatedContent);
+                },
+                error: function (err) {
+                    alert("error");
+                }
+            });
+        });
+    });
+</script>
 
 
 

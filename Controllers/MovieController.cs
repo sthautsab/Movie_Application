@@ -7,27 +7,29 @@ using System.Security.Claims;
 
 namespace Movie_Application.Controllers
 {
-
     public class MovieController : Controller
     {
         private readonly IMovieRepository _movieRepository;
         private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _hostingEnvironment;
         private readonly IRatingRepository _ratingRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public MovieController(IMovieRepository movieRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IRatingRepository ratingRepository)
+        public MovieController(IMovieRepository movieRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment, IRatingRepository ratingRepository, ICommentRepository commentRepository)
         {
             _movieRepository = movieRepository;
             _hostingEnvironment = hostingEnvironment;
             _ratingRepository = ratingRepository;
-        }
+            _commentRepository = commentRepository;
 
+        }
+        [Authorize(Roles = "Admin")]
         public IActionResult AddMovie()
         {
             return View();
         }
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> AddMovie(MovieViewModel movieVM)
+        public async Task<IActionResult> AddMovie(MovieVM movieVM)
         {
             string uniqueFileName = null;
             if (movieVM.Photo != null)
@@ -87,10 +89,15 @@ namespace Movie_Application.Controllers
 
         public async Task<IActionResult> GetMovieById(Guid id)
         {
-            MovieCommentVM details = new MovieCommentVM();
+            MovieDetailsVM details = new MovieDetailsVM();
+
             RatingVM ratingVM = new RatingVM();
+
             Movie movie = new Movie();
             movie = await _movieRepository.GetMovieById(id);
+
+            List<CommentVM> commentsVM = new List<CommentVM>();
+            commentsVM = await GetComments(id);
 
             var UserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!string.IsNullOrEmpty(UserId))
@@ -111,6 +118,7 @@ namespace Movie_Application.Controllers
             {
                 details.Movie = movie;
                 details.RatingVM = ratingVM;
+                details.comments = commentsVM;
                 return View(details);
             }
             else
@@ -119,11 +127,11 @@ namespace Movie_Application.Controllers
             }
 
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var movie = await _movieRepository.GetMovieById(id);
-            UpdateViewModel updateMovie = new UpdateViewModel();
+            MovieUpdateVM updateMovie = new MovieUpdateVM();
             updateMovie.Id = movie.Id;
             updateMovie.Name = movie.Name;
             updateMovie.Director = movie.Director;
@@ -135,7 +143,7 @@ namespace Movie_Application.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UpdateViewModel updatedMovie)
+        public async Task<IActionResult> Edit(MovieUpdateVM updatedMovie)
         {
             try
             {
@@ -180,6 +188,8 @@ namespace Movie_Application.Controllers
             }
         }
 
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(Guid id)
         {
             bool result = _movieRepository.DeleteMovie(id);
@@ -207,6 +217,25 @@ namespace Movie_Application.Controllers
 
             await file.CopyToAsync(new FileStream(filePath, FileMode.Create));
             return uniqueFileName;
+        }
+
+        public async Task<List<CommentVM>> GetComments(Guid MovieId)
+        {
+            List<CommentVM> commentVM = new List<CommentVM>();
+            var comments = await _commentRepository.GetMovieComments(MovieId);
+            commentVM = comments
+                    .Where(c => c.MovieId == MovieId)
+                    .Select(s => new CommentVM()
+                    {
+                        MovieId = s.MovieId,
+                        CommentId = s.CommentId,
+                        Content = s.Content,
+                        DatePosted = s.DatePosted,
+                        UserName = s.UserName
+                    })
+                    .ToList();
+            commentVM = commentVM.OrderByDescending(c => c.DatePosted).ToList();
+            return commentVM;
         }
 
     }

@@ -135,7 +135,7 @@ namespace Movie_Application.Repository.SP_Implementation
                 cmd.Parameters.AddWithValue("@Director", updatedMovie.Director != null ? updatedMovie.Director : DBNull.Value);
                 cmd.Parameters.AddWithValue("@Description", updatedMovie.Description != null ? updatedMovie.Description : DBNull.Value);
                 cmd.Parameters.AddWithValue("@PhotoPath", updatedMovie.PhotoPath != null ? updatedMovie.PhotoPath : DBNull.Value);
-                cmd.Parameters.AddWithValue("@AverageRating", updatedMovie.AverageRating != null ? updatedMovie.AverageRating : DBNull.Value);
+                cmd.Parameters.AddWithValue("@AverageRating", updatedMovie.AverageRating);
 
                 await conn.OpenAsync();
 

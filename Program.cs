@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Movie_Application.Data;
+using Movie_Application.Repository.Implementation;
 using Movie_Application.Repository.Interface;
 using Movie_Application.Repository.SP_Implementation;
 using Movie_Application.Seed;
@@ -17,10 +18,18 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<MovieContext>();
 
-builder.Services.AddScoped<IMovieRepository, SP_Movierepository>();
-builder.Services.AddScoped<ICommentRepository, SP_CommentRepository>();
-builder.Services.AddScoped<IRatingRepository, SP_RatingRepository>();
-
+if (builder.Configuration.GetValue<bool>("UseSP"))
+{
+    builder.Services.AddScoped<IMovieRepository, SP_Movierepository>();
+    builder.Services.AddScoped<ICommentRepository, SP_CommentRepository>();
+    builder.Services.AddScoped<IRatingRepository, SP_RatingRepository>();
+}
+else
+{
+    builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+    builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+    builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+}
 builder.Services.AddScoped<IRole, Role>();
 
 var app = builder.Build();

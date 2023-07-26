@@ -18,7 +18,7 @@ namespace Movie_Application.Controllers
             return PartialView("_AddComment");
         }
         [HttpPost]
-        public async Task<IActionResult> AddComment(CommentVM commentVM)
+        public async Task<IActionResult> AddComment([Bind("MovieId, Content")] CommentVM commentVM)
         {
             try
             {
@@ -44,24 +44,56 @@ namespace Movie_Application.Controllers
                 return Content($"Error: {ex.Message}");
             }
 
-
         }
+
         [Route("Comment/GetMovieComments/{movieId}")]
         public async Task<IActionResult> GetMovieComments(Guid movieId)
         {
             try
             {
-                List<Comment> comments = new List<Comment>();
-                comments = await _commentRepository.GetMovieComments(movieId);
-                comments = comments.OrderByDescending(c => c.DatePosted).ToList();
-                return PartialView("_GetMovieComments", comments);
+                List<CommentVM> commentsVM = new List<CommentVM>();
+                var comments = await _commentRepository.GetMovieComments(movieId);
+                commentsVM = comments
+                        .Where(c => c.MovieId == movieId)
+                        .Select(s => new CommentVM()
+                        {
+                            MovieId = s.MovieId,
+                            CommentId = s.CommentId,
+                            Content = s.Content,
+                            DatePosted = s.DatePosted,
+                            UserName = s.UserName,
+                        })
+                        .ToList();
 
+                commentsVM = commentsVM.OrderByDescending(c => c.DatePosted).ToList();
+                return PartialView("_GetMovieComments", commentsVM);
             }
             catch (Exception ex)
             {
                 return Content($"Error: {ex.Message}");
             }
         }
+
+        //public async Task<IActionResult> GetMovieComments(Guid movieId)
+        //{
+        //    try
+        //    {
+        //        //List<Comment> comments = new List<Comment>();
+        //        var comments = await _commentRepository.GetMovieComments(movieId);
+        //        comments = comments.OrderByDescending(c => c.DatePosted).ToList();
+
+        //        //CommentListVM cmtList = new CommentListVM()
+        //        //{
+        //        //    CommentList = comments
+        //        //}
+
+        //        return PartialView("_GetMovieComments", comments);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Content($"Error: {ex.Message}");
+        //    }
+        //}
 
         public async Task<IActionResult> Edit(Guid CommentId)
         {

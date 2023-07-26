@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Movie_Application.ViewModel
 {
-    public class UpdateViewModel
+    public class MovieUpdateVM
     {
         public Guid Id { get; set; }
 

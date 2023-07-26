@@ -27,8 +27,17 @@
 .star-rating label:hover ~ label {
   color: #fc0;
 }
-</style>
 
+    #rate-message{
+        color:lightgreen;
+    }
+    #submitButton{
+        margin-top:3px;
+    }
+</style>
+<p id="rate-message">
+      
+</p>
 <form  method="post" >
 <div class="star-rating">
     
@@ -70,6 +79,7 @@
         }
         $("#submitButton").on("click", function (event) {
             event.preventDefault();
+            $("#myButton").blur();
             var movieId = $("input[name='MovieId']").val();
             var rating = $("input[name='Rate']:checked").val();
 
@@ -82,12 +92,15 @@
                 type: "POST",
                 data: data,
                 success: function (response) {
-                    console.log(response)
                     // Handle the success response
                     var $responseHtml = $(response);
                     var $updatedContent = $responseHtml.find('#average-rating');
-
                     $('#average-rating').html($updatedContent);
+
+                    
+                    $('#rate-message').html(`"You Rated ${data.Rate}"`);
+                    //alert(`"You Rated ${data.Rate}"`);
+                    
                 },
                 error: function (xhr, status, error) {
                     // Handle the error response
